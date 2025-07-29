@@ -1,9 +1,8 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { APITester } from './APITester'
-import './index.css'
-
-import logo from './logo.svg'
-import reactLogo from './react.svg'
+import { Card, CardContent } from '@/client/components/ui/card'
+import { APITester } from '@/client/components/api-tester'
+import '@/client/styles/index.css'
+import logo from '@/assets/logo.svg'
+import reactLogo from '@/assets/react.svg'
 
 export function App() {
   return (
@@ -37,5 +36,3 @@ export function App() {
     </div>
   )
 }
-
-export default App

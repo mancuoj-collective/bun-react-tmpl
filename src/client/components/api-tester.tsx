@@ -1,7 +1,13 @@
-import { Button } from './ui/button'
-import { Input } from './ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
-import { cn } from '../lib/utils'
+import { Button } from '@/client/components/ui/button'
+import { Input } from '@/client/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/client/components/ui/select'
+import { Textarea } from '@/client/components/ui/textarea'
 import { useRef, type FormEvent } from 'react'
 
 export function APITester() {
@@ -26,10 +32,10 @@ export function APITester() {
   }
 
   return (
-    <div className="mt-8 mx-auto w-full max-w-2xl text-left flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-6">
       <form
         onSubmit={testEndpoint}
-        className="flex items-center gap-2 bg-card p-3 rounded-xl font-mono border border-input w-full"
+        className="flex items-center gap-3 bg-card p-3 rounded-xl border border-input w-full"
       >
         <Select name="method" defaultValue="GET">
           <SelectTrigger className="w-[100px]">
@@ -40,34 +46,21 @@ export function APITester() {
             <SelectItem value="PUT">PUT</SelectItem>
           </SelectContent>
         </Select>
-
         <Input
           type="text"
           name="endpoint"
           defaultValue="/api/hello"
-          className={cn(
-            'flex-1 font-mono',
-            'bg-transparent border-0 shadow-none',
-            'focus-visible:ring-0 focus-visible:ring-offset-0',
-          )}
           placeholder="/api/hello"
+          className="font-mono"
         />
-
-        <Button type="submit" variant="secondary">
-          Send
-        </Button>
+        <Button type="submit">Send</Button>
       </form>
 
-      <textarea
+      <Textarea
         ref={responseInputRef}
         readOnly
         placeholder="Response will appear here..."
-        className={cn(
-          'w-full min-h-[140px] bg-card',
-          'border border-input rounded-xl p-3',
-          'font-mono resize-y',
-          'placeholder:text-muted-foreground',
-        )}
+        className="p-3 font-mono rounded-xl min-h-[120px]"
       />
     </div>
   )

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun --hot src/index.tsx",
     "start": "NODE_ENV=production bun src/index.tsx",
-    "build": "bun run build.ts"
+    "format": "prettier -w ."
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.7",
@@ -23,8 +23,11 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@mancuoj/prettier-config": "^0.5.3",
+    "@types/bun": "latest",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/bun": "latest"
-  }
+    "prettier": "^3.6.2"
+  },
+  "prettier": "@mancuoj/prettier-config"
 }

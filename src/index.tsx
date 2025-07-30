@@ -7,16 +7,22 @@ const server = serve({
     '/*': index,
 
     '/api/hello': {
-      async GET() {
+      async GET(req) {
         return Response.json({
-          message: 'Hello, world!',
-          method: 'GET',
+          success: true,
+          data: {
+            message: 'Hello, world!',
+            method: req.method,
+          },
         })
       },
-      async PUT() {
+      async PUT(req) {
         return Response.json({
-          message: 'Hello, world!',
-          method: 'PUT',
+          success: true,
+          data: {
+            message: 'Hello, world!',
+            method: req.method,
+          },
         })
       },
     },
@@ -24,9 +30,26 @@ const server = serve({
     '/api/hello/:name': async (req) => {
       const name = req.params.name
       return Response.json({
-        message: `Hello, ${name}!`,
+        success: true,
+        data: {
+          message: `Hello, ${name}!`,
+        },
       })
     },
+  },
+
+  error(error) {
+    console.error(error)
+    return Response.json(
+      {
+        success: false,
+        error: {
+          code: error.code || 'UNKNOWN_ERROR',
+          message: error.message,
+        },
+      },
+      { status: 500 },
+    )
   },
 
   development: process.env.NODE_ENV !== 'production' && {

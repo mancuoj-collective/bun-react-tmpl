@@ -60,7 +60,7 @@ export function APITester() {
         ref={responseInputRef}
         readOnly
         placeholder="Response will appear here..."
-        className="p-3 font-mono rounded-xl min-h-[120px]"
+        className="p-3 font-mono rounded-xl min-h-[150px]"
       />
     </div>
   )

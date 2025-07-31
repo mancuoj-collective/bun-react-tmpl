@@ -1,40 +1,45 @@
-import { serve } from 'bun'
+import { serve, sql } from 'bun'
 import index from './index.html'
+import { db } from './db/setup.ts'
+import type { Todo } from './types.ts'
 
 const server = serve({
   routes: {
     // Serve index.html for all unmatched routes.
     '/*': index,
 
-    '/api/hello': {
-      async GET(req) {
-        return Response.json({
-          success: true,
-          data: {
-            message: 'Hello, world!',
-            method: req.method,
-          },
-        })
+    '/api/todos': {
+      GET() {
+        const todos = db.query('SELECT * FROM todos').all()
+        return Response.json(todos)
       },
-      async PUT(req) {
+
+      async POST(req) {
+        const todo: Pick<Todo, 'title'> = await req.json()
+        const { lastInsertRowid } = db.query(`INSERT INTO todos (title) VALUES (?)`).run(todo.title)
         return Response.json({
+          id: lastInsertRowid,
           success: true,
-          data: {
-            message: 'Hello, world!',
-            method: req.method,
-          },
         })
       },
     },
 
-    '/api/hello/:name': async (req) => {
-      const name = req.params.name
-      return Response.json({
-        success: true,
-        data: {
-          message: `Hello, ${name}!`,
-        },
-      })
+    '/api/todos/:id': {
+      async PUT(req) {
+        const todo: Todo = await req.json()
+        db.query(`UPDATE todos SET title = ?, completed = ? WHERE id = ?`).run(
+          todo.title,
+          todo.completed,
+          todo.id,
+        )
+        return Response.json({ success: true })
+      },
+
+      DELETE(req) {
+        const { id } = req.params
+        db.query(`DELETE FROM todos WHERE id = ?`).run(id)
+        return Response.json({ success: true })
+      },
     },
   },
 
@@ -42,11 +47,8 @@ const server = serve({
     console.error(error)
     return Response.json(
       {
-        success: false,
-        error: {
-          code: error.code || 'UNKNOWN_ERROR',
-          message: error.message,
-        },
+        code: error.code,
+        message: error.message,
       },
       { status: 500 },
     )

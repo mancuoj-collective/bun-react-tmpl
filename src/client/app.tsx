@@ -14,26 +14,25 @@ export function App() {
   const { mutate: updateTodo } = useUpdateTodo()
   const { mutate: deleteTodo } = useDeleteTodo()
 
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    createTodo(newTodo)
+    setNewTodo('')
+  }
+
   return (
     <div className="font-sans antialiased relative">
       <div className="mx-auto max-w-xl p-20 flex flex-col gap-4 text-sm">
-        <div className="flex gap-2">
+        <form className="flex gap-2" onSubmit={handleSubmit}>
           <Input
             className="flex-1 h-8"
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
           />
-          <Button
-            size="sm"
-            onClick={() => {
-              createTodo(newTodo)
-              setNewTodo('')
-            }}
-            disabled={!newTodo}
-          >
+          <Button size="sm" disabled={!newTodo.trim()}>
             <PlusIcon className="size-4" />
           </Button>
-        </div>
+        </form>
         <div className="border">
           {todos?.length === 0 && (
             <div className="py-8 text-center text-muted-foreground">No todos yet</div>

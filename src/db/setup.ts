@@ -1,6 +1,6 @@
 import { Database } from 'bun:sqlite'
 
-const db = new Database('./data/todos.db')
+const db = new Database('todos.db')
 
 db.exec('PRAGMA journal_mode = WAL;')
 db.exec(`

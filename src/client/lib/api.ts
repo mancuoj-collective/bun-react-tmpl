@@ -4,17 +4,18 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 const apiFetch = ofetch.create({ baseURL: '/api' })
+const TODOS_QUERY_KEY = ['todos']
 
 export function getTodos() {
   return apiFetch<Todo[]>('/todos')
 }
 
 export function createTodo(title: string) {
-  return apiFetch('/todos', { method: 'POST', body: { title } })
+  return apiFetch<Todo>('/todos', { method: 'POST', body: { title } })
 }
 
 function updateTodo(todo: Todo) {
-  return apiFetch(`/todos/${todo.id}`, { method: 'PUT', body: todo })
+  return apiFetch<Todo>(`/todos/${todo.id}`, { method: 'PUT', body: todo })
 }
 
 export function deleteTodo(id: number) {
@@ -23,7 +24,7 @@ export function deleteTodo(id: number) {
 
 export function useTodos() {
   return useQuery({
-    queryKey: ['todos'],
+    queryKey: TODOS_QUERY_KEY,
     queryFn: getTodos,
   })
 }
@@ -32,11 +33,25 @@ export function useCreateTodo() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: createTodo,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] })
+    onMutate: async (newTodoTitle) => {
+      await queryClient.cancelQueries({ queryKey: TODOS_QUERY_KEY })
+      const previousTodos = queryClient.getQueryData<Todo[]>(TODOS_QUERY_KEY)
+      queryClient.setQueryData<Todo[]>(TODOS_QUERY_KEY, (old) => [
+        ...(old || []),
+        {
+          id: Date.now(),
+          title: newTodoTitle,
+          completed: 0,
+        },
+      ])
+      return { previousTodos }
     },
-    onError: (error) => {
+    onError: (error, _variables, context) => {
       toast.error(error.message)
+      queryClient.setQueryData(TODOS_QUERY_KEY, context?.previousTodos)
+    },
+    onSettled() {
+      queryClient.invalidateQueries({ queryKey: TODOS_QUERY_KEY })
     },
   })
 }

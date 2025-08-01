@@ -47,10 +47,12 @@ export function useCreateTodo() {
       return { previousTodos }
     },
     onError: (error, _variables, context) => {
-      toast.error(error.message)
-      queryClient.setQueryData(TODOS_QUERY_KEY, context?.previousTodos)
+      toast.error('Failed to create todo', { description: error.message })
+      if (context?.previousTodos) {
+        queryClient.setQueryData(TODOS_QUERY_KEY, context.previousTodos)
+      }
     },
-    onSettled() {
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: TODOS_QUERY_KEY })
     },
   })
@@ -60,11 +62,22 @@ export function useUpdateTodo() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: updateTodo,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] })
+    onMutate: async (updatedTodo) => {
+      await queryClient.cancelQueries({ queryKey: TODOS_QUERY_KEY })
+      const previousTodos = queryClient.getQueryData<Todo[]>(TODOS_QUERY_KEY)
+      queryClient.setQueryData<Todo[]>(TODOS_QUERY_KEY, (old) =>
+        old?.map((todo) => (todo.id === updatedTodo.id ? { ...todo, ...updatedTodo } : todo)),
+      )
+      return { previousTodos }
     },
-    onError: (error) => {
-      toast.error(error.message)
+    onError: (error, _variables, context) => {
+      toast.error('Failed to update todo', { description: error.message })
+      if (context?.previousTodos) {
+        queryClient.setQueryData(TODOS_QUERY_KEY, context.previousTodos)
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: TODOS_QUERY_KEY })
     },
   })
 }
@@ -73,11 +86,22 @@ export function useDeleteTodo() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: deleteTodo,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] })
+    onMutate: async (idToDelete) => {
+      await queryClient.cancelQueries({ queryKey: TODOS_QUERY_KEY })
+      const previousTodos = queryClient.getQueryData<Todo[]>(TODOS_QUERY_KEY)
+      queryClient.setQueryData<Todo[]>(TODOS_QUERY_KEY, (old) =>
+        old?.filter((todo) => todo.id !== idToDelete),
+      )
+      return { previousTodos }
     },
-    onError: (error) => {
-      toast.error(error.message)
+    onError: (error, _variables, context) => {
+      toast.error('Failed to delete todo', { description: error.message })
+      if (context?.previousTodos) {
+        queryClient.setQueryData(TODOS_QUERY_KEY, context.previousTodos)
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: TODOS_QUERY_KEY })
     },
   })
 }

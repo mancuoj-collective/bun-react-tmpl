@@ -33,10 +33,12 @@ export function App() {
             <PlusIcon className="size-4" />
           </Button>
         </form>
+
         <div className="border">
           {todos?.length === 0 && (
             <div className="py-8 text-center text-muted-foreground">No todos yet</div>
           )}
+
           {todos?.map((todo) => (
             <div
               key={todo.id}
@@ -64,6 +66,7 @@ export function App() {
             </div>
           ))}
         </div>
+
         <div className="flex justify-end">
           <Button variant="ghost" size="icon" asChild>
             <a href="https://github.com/mancuoj-collective/bun-react-tmpl" target="_blank">

@@ -1,12 +1,10 @@
 import { ofetch } from 'ofetch'
 import type { Todo } from '@/types'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 const apiFetch = ofetch.create({ baseURL: '/api' })
-const keys = {
-  todos: ['todos'],
-}
+const keys = { todos: ['todos'] }
 
 export function getTodos() {
   return apiFetch<Todo[]>('/todos')

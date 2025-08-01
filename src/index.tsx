@@ -4,8 +4,7 @@ import { db } from './db/setup.ts'
 import type { Todo } from './types.ts'
 
 const queries = {
-  getAll: db.query('SELECT * FROM todos'),
-  getById: db.query('SELECT * FROM todos WHERE id = ?'),
+  get: db.query('SELECT * FROM todos'),
   create: db.query('INSERT INTO todos (title) VALUES (?)'),
   update: db.query('UPDATE todos SET title = ?, completed = ? WHERE id = ?'),
   delete: db.query('DELETE FROM todos WHERE id = ?'),
@@ -18,7 +17,7 @@ const server = serve({
 
     '/api/todos': {
       GET() {
-        const todos = queries.getAll.all()
+        const todos = queries.get.all()
         return Response.json(todos)
       },
 

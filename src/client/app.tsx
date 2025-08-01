@@ -22,8 +22,8 @@ export function App() {
 
   return (
     <div className="font-sans antialiased relative">
-      <div className="mx-auto max-w-xl p-20 flex flex-col gap-4 text-sm">
-        <form className="flex gap-2" onSubmit={handleSubmit}>
+      <div className="mx-auto max-w-xl p-12 md:p-20 flex flex-col gap-4 text-sm">
+        <form className="flex gap-2.5" onSubmit={handleSubmit}>
           <Input
             className="flex-1 h-8"
             value={newTodo}
@@ -40,22 +40,24 @@ export function App() {
           {todos?.map((todo) => (
             <div
               key={todo.id}
-              className="flex justify-between items-center gap-2.5 pl-2 not-last:border-b"
+              className="flex justify-between items-center gap-2.5 pl-2.5 not-last:border-b"
             >
               <Checkbox
+                id={`todo-${todo.id}`}
                 checked={todo.completed === 1}
                 onCheckedChange={(checked) =>
                   updateTodo({ id: todo.id, completed: checked ? 1 : 0, title: todo.title })
                 }
               />
-              <div
+              <label
+                htmlFor={`todo-${todo.id}`}
                 className={cn(
                   'flex-1',
                   todo.completed === 1 && 'line-through text-muted-foreground',
                 )}
               >
                 {todo.title}
-              </div>
+              </label>
               <Button variant="ghost" size="icon" onClick={() => deleteTodo(todo.id)}>
                 <TrashIcon className="size-4" />
               </Button>

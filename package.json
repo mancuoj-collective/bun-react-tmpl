@@ -12,10 +12,10 @@
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.2.6",
     "@fontsource/dm-mono": "^5.2.6",
-    "@radix-ui/react-checkbox": "^1.3.2",
-    "@radix-ui/react-select": "^2.2.5",
+    "@radix-ui/react-checkbox": "^1.3.3",
+    "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.3",
-    "@tanstack/react-query": "^5.84.2",
+    "@tanstack/react-query": "^5.85.3",
     "bun-plugin-tailwind": "^0.0.15",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -26,13 +26,13 @@
     "react-dom": "^19.1.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.11",
-    "tw-animate-css": "^1.3.6"
+    "tailwindcss": "^4.1.12",
+    "tw-animate-css": "^1.3.7"
   },
   "devDependencies": {
     "@mancuoj/prettier-config": "^0.5.3",
     "@types/bun": "latest",
-    "@types/react": "^19.1.9",
+    "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "prettier": "^3.6.2",
     "shadcn": "^2.10.0"

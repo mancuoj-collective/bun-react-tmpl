@@ -19,7 +19,7 @@
     "bun-plugin-tailwind": "^0.1.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.561.0",
+    "lucide-react": "^0.562.0",
     "next-themes": "^0.4.6",
     "ofetch": "^1.5.1",
     "react": "^19.2.3",
@@ -35,7 +35,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "prettier": "^3.7.4",
-    "shadcn": "^3.6.1"
+    "shadcn": "^3.6.2"
   },
   "prettier": "@mancuoj/prettier-config"
 }

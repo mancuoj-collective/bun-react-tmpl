@@ -32,10 +32,10 @@
   "devDependencies": {
     "@mancuoj/prettier-config": "^0.5.4",
     "@types/bun": "latest",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "prettier": "^3.7.4",
-    "shadcn": "^3.6.2"
+    "shadcn": "^3.6.3"
   },
   "prettier": "@mancuoj/prettier-config"
 }

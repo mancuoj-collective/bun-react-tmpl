@@ -22,8 +22,8 @@
     "lucide-react": "^0.563.0",
     "next-themes": "^0.4.6",
     "ofetch": "^1.5.1",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
@@ -32,10 +32,10 @@
   "devDependencies": {
     "@mancuoj/prettier-config": "^0.5.4",
     "@types/bun": "latest",
-    "@types/react": "^19.2.9",
+    "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
     "prettier": "^3.8.1",
-    "shadcn": "^3.7.0"
+    "shadcn": "^3.8.1"
   },
   "prettier": "@mancuoj/prettier-config"
 }

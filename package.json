@@ -35,7 +35,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "prettier": "^3.8.1",
-    "shadcn": "^3.8.5"
+    "shadcn": "^4.0.2"
   },
   "prettier": "@mancuoj/prettier-config"
 }
